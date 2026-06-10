@@ -148,13 +148,16 @@ public class QuestBoardResource {
         if (email != null && !email.isBlank()) {
             return email.toLowerCase();
         }
-        return identity.getPrincipal().getName();
+        return identity.getPrincipal() != null ? identity.getPrincipal().getName() : "unknown";
     }
 
     private TemplateInstance withLayoutData(
             TemplateInstance templateInstance, String activePage, String localeCookie) {
         boolean authenticated = identity != null && !identity.isAnonymous();
-        String userName = authenticated ? identity.getPrincipal().getName() : null;
+        String userName = null;
+        if (authenticated && identity.getPrincipal() != null) {
+            userName = identity.getPrincipal().getName();
+        }
         return TemplateLocaleUtil.apply(templateInstance, localeCookie)
                 .data("activePage", activePage)
                 .data("userAuthenticated", authenticated)
