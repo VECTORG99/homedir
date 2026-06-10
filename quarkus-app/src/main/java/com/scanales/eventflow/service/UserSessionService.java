@@ -42,11 +42,10 @@ public class UserSessionService {
         String name = getClaim(identity, "name");
         String picture = getClaim(identity, "picture"); // Google often sends 'picture'
 
-        if (name == null) {
+        if (name == null && identity.getPrincipal() != null) {
             name = identity.getPrincipal().getName();
         }
-        if (email == null) {
-            // Fallback to principal name if it looks like an email, or just use name
+        if (email == null && identity.getPrincipal() != null) {
             email = identity.getPrincipal().getName();
         }
 
