@@ -33,7 +33,7 @@ public final class AdminUtils {
       return false;
     }
     String email = getClaim(identity, "email");
-    if (email == null) {
+    if (email == null && identity.getPrincipal() != null) {
       email = identity.getPrincipal().getName();
     }
     return email != null && getAdminList().contains(email);
