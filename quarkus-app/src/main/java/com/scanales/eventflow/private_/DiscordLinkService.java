@@ -344,7 +344,9 @@ public class DiscordLinkService {
       return email.toLowerCase(Locale.ROOT);
     }
     String sub = AdminUtils.getClaim(identity, "sub");
-    return sub != null ? sub : identity.getPrincipal().getName();
+    if (sub != null) return sub;
+    if (identity.getPrincipal() != null) return identity.getPrincipal().getName();
+    return "unknown";
   }
 
   private record DiscordUser(String id, String handle, String avatarUrl) {}
