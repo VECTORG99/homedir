@@ -24,7 +24,7 @@ public class PostAuthenticationLoggingFilter extends AbstractLoggingFilter {
     }
 
     String sub = getClaim("sub");
-    if (sub == null) {
+    if (sub == null && identity.getPrincipal() != null) {
       sub = identity.getPrincipal().getName();
     }
     String preferredUsername = getClaim("preferred_username");
