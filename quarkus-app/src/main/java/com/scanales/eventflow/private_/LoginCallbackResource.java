@@ -63,6 +63,6 @@ public class LoginCallbackResource {
     if (email != null && !email.isBlank()) {
       return email.toLowerCase();
     }
-    return identity.getPrincipal().getName();
+    return identity.getPrincipal() != null ? identity.getPrincipal().getName() : "unknown";
   }
 }
