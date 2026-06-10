@@ -157,7 +157,10 @@ public class PublicPagesResource {
       String localeCookie,
       jakarta.ws.rs.core.HttpHeaders headers) {
     boolean authenticated = identity != null && !identity.isAnonymous();
-    String userName = authenticated ? identity.getPrincipal().getName() : "";
+    String userName = "";
+    if (authenticated && identity.getPrincipal() != null) {
+      userName = identity.getPrincipal().getName();
+    }
     String userInitial = initialFrom(userName);
     return TemplateLocaleUtil.apply(templateInstance, localeCookie, headers)
         .data("activePage", activePage)
