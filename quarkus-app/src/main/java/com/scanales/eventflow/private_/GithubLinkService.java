@@ -103,9 +103,10 @@ public class GithubLinkService {
       String ghId = profile.id();
 
       String userId = currentUserId(identity);
-      String name = AdminUtils.getClaim(identity, "name") != null
-          ? AdminUtils.getClaim(identity, "name")
-          : identity.getPrincipal().getName();
+      String name = AdminUtils.getClaim(identity, "name");
+      if (name == null && identity.getPrincipal() != null) {
+        name = identity.getPrincipal().getName();
+      }
       String email = AdminUtils.getClaim(identity, "email");
 
       profiles.linkGithub(
@@ -166,6 +167,8 @@ public class GithubLinkService {
       return email.toLowerCase(Locale.ROOT);
     }
     String sub = AdminUtils.getClaim(identity, "sub");
-    return sub != null ? sub : identity.getPrincipal().getName();
+    if (sub != null) return sub;
+    if (identity.getPrincipal() != null) return identity.getPrincipal().getName();
+    return "unknown";
   }
 }

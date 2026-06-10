@@ -39,7 +39,7 @@ public class PrivateResource {
   @Produces(MediaType.TEXT_HTML)
   public TemplateInstance privatePage() {
     String sub = getClaim("sub");
-    if (sub == null) {
+    if (sub == null && identity.getPrincipal() != null) {
       sub = identity.getPrincipal().getName();
     }
     String preferredUsername = getClaim("preferred_username");

@@ -59,8 +59,9 @@ public class UserProfileResource {
     }
 
     profile.authenticated = true;
-    profile.userId = identity.getPrincipal().getName();
-    profile.displayName = identity.getPrincipal().getName(); // Default fallback
+    java.security.Principal principal = identity.getPrincipal();
+    profile.userId = principal != null ? principal.getName() : "unknown";
+    profile.displayName = principal != null ? principal.getName() : "User"; // Default fallback
     profile.avatarUrl = null;
 
     // Fetch real member data from CommunityService (os-santiago)

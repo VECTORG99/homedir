@@ -101,7 +101,10 @@ public class EventResource {
   private TemplateInstance withLayoutData(
       TemplateInstance templateInstance, String activePage, String localeCookie) {
     boolean authenticated = identity != null && !identity.isAnonymous();
-    String userName = authenticated ? identity.getPrincipal().getName() : null;
+    String userName = null;
+    if (authenticated && identity.getPrincipal() != null) {
+      userName = identity.getPrincipal().getName();
+    }
     return TemplateLocaleUtil.apply(templateInstance, localeCookie)
         .data("activePage", activePage)
         .data("userAuthenticated", authenticated)

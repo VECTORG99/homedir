@@ -492,7 +492,7 @@ public class ProfileResource {
 
   private String getEmail() {
     String email = getClaim("email");
-    if (email == null) {
+    if (email == null && identity.getPrincipal() != null) {
       email = identity.getPrincipal().getName();
     }
     return email;

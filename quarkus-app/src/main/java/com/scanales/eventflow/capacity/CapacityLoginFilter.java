@@ -49,7 +49,7 @@ public class CapacityLoginFilter implements ContainerRequestFilter {
 
   private String getEmail() {
     Object value = identity.getAttribute("email");
-    if (value == null) {
+    if (value == null && identity.getPrincipal() != null) {
       value = identity.getPrincipal().getName();
     }
     return value == null ? null : value.toString();
