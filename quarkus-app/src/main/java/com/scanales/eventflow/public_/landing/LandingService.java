@@ -14,7 +14,10 @@ public class LandingService {
   public LandingViewModel buildViewModel() {
     boolean loggedIn = identity != null && !identity.isAnonymous();
 
-    String displayName = loggedIn ? identity.getPrincipal().getName() : "NOVICE GUEST";
+    String displayName = "NOVICE GUEST";
+    if (loggedIn && identity.getPrincipal() != null) {
+      displayName = identity.getPrincipal().getName();
+    }
     String roleLabel = loggedIn ? "DEVELOPER" : "VISITOR";
 
     int level = loggedIn ? 3 : 1;
